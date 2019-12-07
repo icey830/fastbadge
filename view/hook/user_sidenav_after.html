@@ -1,0 +1,5 @@
+<ul class="list-group">
+    <li class="list-group-heading">{:__('会员勋章')}</li>
+    <li class="list-group-item {:$actionname=='badgecenter'?'active':''}"><a href="{:url('index/badge/badgecenter')}"><i class="fa fa-shield fa-fw"></i> {:__('勋章中心')}</a></li>
+    <li class="list-group-item {:$actionname=='mybadges'?'active':''}"><a href="{:url('index/badge/mybadges')}"><i class="fa fa-leaf fa-fw"></i> {:__('我的勋章')}</a></li>
+</ul>

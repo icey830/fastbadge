@@ -1,0 +1,60 @@
+
+<div id="content-container" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {include file="common/sidenav" /}
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="page-header">{:__('Badge center')}
+                     
+                   </h2>
+              <p>{$addonConfig.badgecentertips}</p>
+                  <div class="panel-body p-0">
+                    <div class="row user-dashboard">
+                      <!-- 循环输出勋章列表 S-->
+                        {foreach name="badgelist" id="badge"}
+                        <div class="col-md-4 col-sm-6 col-xs-4">
+                           
+                                <!-- counter item -->
+                                <div class="counter-item">
+                                    <!-- icon -->
+                                    <img style="height:90px;width:70px;" src="{$badge.image|cdnurl}" />
+                                    <!-- Heading -->
+                                    <h4>{$badge.name}</h4>
+                                    <!-- Paragraph -->
+                                    <p>{:__('Get type')}：{$badge.jifen}{:__('Score')}</p>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{$badge.id}">
+                                    {:__('View details')}
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                       <!--弹窗 S-->
+                      <div class="modal fade" id="modal{$badge.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" id="myModalLabel">{$badge.name}</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p>{$badge.shuoming}</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--弹窗 E-->
+                        </div>
+                    {/foreach}
+                    <!-- 循环输出勋章列表 E-->
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div> <!--row-->
+</div>

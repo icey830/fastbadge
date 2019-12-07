@@ -1,0 +1,111 @@
+<!-- Page Content -->
+  <link href="https://v3.bootcss.com/assets/css/docs.min.css" rel="stylesheet">
+<div class="bs-docs-header">
+  <div class="container">
+    <h1>会员勋章</h1>
+    <h2>自定义设置会员勋章支持CMS程序调用，在关于作者里显示勋章列表</h2>
+
+  </div>
+</div>
+    <div class="container bs-docs-container">
+  <div class="row">
+    <div class="col-md-9" role="main">
+    
+        <div class="bs-docs-section">
+          <h1 id="step1" class="page-header"><a class="anchorjs-link " href="#step1" aria-label="Anchor link for: step1" data-anchorjs-icon="" style="font-family: anchorjs-icons; font-style: normal; font-variant: normal; font-weight: normal; line-height: inherit; position: absolute; margin-left: -1em; padding-right: 0.5em;"></a>开始使用</h1>
+           <p class="lead">感谢您使用会员勋章插件</p>
+          
+          <h2 id="step1-1"><a class="anchorjs-link " href="#step1-1" aria-label="Anchor link for: step1-1" data-anchorjs-icon="" style="font-family: anchorjs-icons; font-style: normal; font-variant: normal; font-weight: normal; line-height: inherit; position: absolute; margin-left: -1em; padding-right: 0.5em;"></a>安装配置</h2>
+          
+           <p class="lead">插件安装之后,在管理后台的插件管理中找到该插件并开始配置,这里可以自定义填写用户中心界面中的头部提示介绍内容</p>
+          
+          <h2 id="step1-2"><a class="anchorjs-link " href="#step1-2" aria-label="Anchor link for: step1-2" data-anchorjs-icon="" style="font-family: anchorjs-icons; font-style: normal; font-variant: normal; font-weight: normal; line-height: inherit; position: absolute; margin-left: -1em; padding-right: 0.5em;"></a>添加勋章</h2>
+          
+           <p class="lead"><strong class="text-danger">在后台左侧菜单栏打开勋章设置，然后添加勋章并填写相关参数</strong></p>
+          <div class="bs-callout bs-callout-info">
+    <h4>根据条件参数自动获得勋章</h4>
+    <p>获取条件为积分数，自定义设置获得该勋章所需要达到的积分数，当用户达到该积分后，会自动将该勋章分配给用户</p>
+  </div>
+  <div class="bs-callout bs-callout-warning">
+    <h4>管理员手动分配勋章</h4>
+    <p>管理员可以直接在后台菜单中的会员勋章分配选项中进行手动分配勋章给用户</p>
+  </div>
+
+     </div>
+        <div class="bs-docs-section">
+          <h1 id="step2" class="page-header"><a class="anchorjs-link " href="#step2" aria-label="Anchor link for: step2" data-anchorjs-icon="" style="font-family: anchorjs-icons; font-style: normal; font-variant: normal; font-weight: normal; line-height: inherit; position: absolute; margin-left: -1em; padding-right: 0.5em;"></a>调用方法</h1>
+          
+          <p>添加了你所需要的勋章之后，可以在前端用户中心侧边栏菜单中选择勋章中心，就可以看到你添加的全部勋章</p>
+          <p>选择我的勋章，可以看到用户自己所获得勋章的日志</p>
+          
+          <p class="lead">在CMS程序中调用勋章列表方法</p>
+       
+           <p>将下列代码复制，放到你的CMS程序的页面模板中的关于作者代码区域内，或者可以放到任意你想展示的位置</p>  
+             {literal}   
+          <pre>{:hook('mybadges', $user.id)}</pre>   
+            {/literal}
+           <p>然后保存，删除缓存，刷新页面，就可以看到效果了</p>  
+        {:hook('mybadges', $user.id)}
+      </div>
+         <div class="bs-docs-section">
+           
+         <h1 id="step3" class="page-header"><a class="anchorjs-link " href="#step3" aria-label="Anchor link for: step3" data-anchorjs-icon="" style="font-family: anchorjs-icons; font-style: normal; font-variant: normal; font-weight: normal; line-height: inherit; position: absolute; margin-left: -1em; padding-right: 0.5em;"></a>样式修改</h1>
+            <p >如果需要自定样式可以打开本插件根目录的Badge.php文件</p>
+
+            {literal}
+          <pre>
+      找到如下代码片段在echo输出的内容中修改样式            
+     /**
+     * 会员勋章展示方法
+     * @return mixed
+     * @param   $user_id 
+     *  调用钩子的时候获取该参数  钩子用法 {:hook('mybadges', $user.id)} 第二个参数就是该参数
+     */
+    
+    public function mybadges($user_id)
+    {
+      $request = Request::instance();
+       // print_r($user_id);
+      $badgelist =  \addons\badge\model\BadgeUser::where('user_id', $user_id)->find();
+
+ $mybadges = json_decode($badgelist['badges']);
+   foreach ($mybadges as $obj) {
+  echo "在这里的内容中修改自定义样式";
+ }
+     return $this->fetch('view/hook/mybadges');       
+    }
+          </pre>
+            {/literal}
+
+      </div>
+    </div>
+    <div class="col-md-3" role="complementary">
+    <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
+      <ul class="nav bs-docs-sidenav">
+        <li class="">
+           <a href="#step1">开始使用</a>
+          <ul class="nav">
+    <li class=""><a href="#step1-1">安装配置</a></li>
+    <li class=""><a href="#step1-2">添加勋章</a></li>
+    </ul>
+        </li>
+        <li class="">
+           <a href="#step2">调用方法</a>
+        </li>
+        <li class="">
+           <a href="#step2">样式修改</a>
+        </li>
+     </ul>
+        <a class="back-to-top" href="#top">
+              返回顶部
+            </a>
+        </nav>
+
+   
+          <!-- /.right -->
+      
+    </div>
+
+
+     </div>
+    </div>
